@@ -27,14 +27,14 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.FileProvider;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,9 +58,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import android.view.MotionEvent;
 
 public class MainActivity extends AppCompatActivity {
     private static final String CLOUD_VISION_API_KEY = "AIzaSyCI_h7DyA9fhinSFPcN5CCq-8L2tQ-4PSI";
@@ -77,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView mImageDetails;
     private ImageView mMainImage;
 
+    //sukim
+    private GestureDetectorCompat gestureObject;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +87,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //Button takePhoto = (Button) findViewById(R.id.fab);
+        //sukim
+        gestureObject = new GestureDetectorCompat(this, new LearnGesture());
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +116,26 @@ public class MainActivity extends AppCompatActivity {
 
         mImageDetails = (TextView) findViewById(R.id.image_details);
         mMainImage = (ImageView) findViewById(R.id.main_image);
+    }
+
+    //sukim
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        this.gestureObject.onTouchEvent(event);
+        return super.onTouchEvent(event);
+    }
+
+    class LearnGesture extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY){
+            if(event2.getX() > event1.getX()){
+                startCamera();
+
+            } else if (event2.getX() < event1.getX()) {
+
+            }
+            return true;
+        }
     }
 
     public void startGalleryChooser() {
@@ -303,75 +329,36 @@ public class MainActivity extends AppCompatActivity {
         return Bitmap.createScaledBitmap(bitmap, resizedWidth, resizedHeight, false);
     }
 
+
     private String convertResponseToString(BatchAnnotateImagesResponse response) {
-        String message = "I found these things:\n\nBest result: ";
+        String message = "I found these things:\n\n";
         List<EntityAnnotation> labels = response.getResponses().get(0).getLabelAnnotations();
 
-        List<String> results = new ArrayList<String>(); //Holds the unfiltered results
-
-        //Common or unwanted words to be filtered out (separated by a space)
-        List<String> filterWords = new ArrayList<>(); //Holds the words to filter out
-        filterWords.add("food");
-        filterWords.add("produce");
-        filterWords.add("family");
-        filterWords.add("dish");
-        filterWords.add("vegetable");
-
-        //Unwanted words that could be part of a desired result
-        List<String> specificWords = new ArrayList<String>(); //Holds the specific words to filter out
-        specificWords.add("plant"); //could be part of a desired result. For example: eggplant
-        specificWords.add("meal"); //could be part of a desired result. For example: oatmeal
-        specificWords.add("fruit"); //could be part of a desired result. For example: kiwifruit
-        specificWords.add("yellow"); //could be part of a desired result. For example: Yellow capsicum
-
-
-        //Used to check if image contains food
-        boolean isFood = false;
-
-        //Used to hold the best result
-        String bestResult = "";
+        List<String> filteredMessage = new ArrayList<String>();
+        String filterWords = "produce fruit plant family food";
 
         if (labels != null) {
             for (EntityAnnotation label : labels) {
-                results.add(String.format(label.getDescription()));
-                for (int i = 0; i < results.size(); i++) {
 
-                    //Checks if image is food
-                    if (results.get(i).contains("food")) {
-                        isFood = true;
-                    }
-
-                    //Searches for the most likely result
-                    //Iterates through filterWords and checks result(i)
-                    boolean filter = false; //true if result needs to be filtered
-                    for (int j = 0; j < filterWords.size(); j++) {
-                        if (results.get(i).contains(filterWords.get(j))) {
-                            filter = true;
-                        }
-                    }
-                    //Iterates through specificWords and checks result(i)
-                    for (int j = 0; j < specificWords.size(); j++) {
-                        if (results.get(i).equals(specificWords.get(j))) {
-                            filter = true;
-                        }
-                    }
-                    if (!filter && bestResult.isEmpty()) {
-                        bestResult = results.get(i);
+                filteredMessage.add(String.format(label.getDescription()));
+                for (int i = 0; i < filteredMessage.size(); i++) {
+                    String filterWord = filteredMessage.get(i);
+                    if (filterWords.contains(filteredMessage.get(i))) {
+                        filteredMessage.remove(i);
                     }
                 }
             }
-            message += "\t\t\t" + bestResult + "\n\nAll results: \t\t\t";
-            for (int i = 0; i < results.size(); i++) {
-                message += results.get(i);
-                message += "\n\t\t\t\t\t\t\t\t\t\t\t\t"; //Used to indent each result for formatting
-            }
 
+            for (String filter : filteredMessage) {
+                message += filter;
+                message += "\n";
+            }
         }     else {
             message += "no results";
         }
-        if (!isFood) {
-            message = "Please choose a photo of food.";
-        }
+
+
+
         return message;
     }
 }
