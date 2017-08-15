@@ -76,11 +76,16 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView mImageDetails;
     private ImageView mMainImage;
+    private String bestRes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        View viewInfoBtn = findViewById(R.id.viewInfoBtn);
+        viewInfoBtn.setVisibility(View.INVISIBLE);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -281,6 +286,11 @@ public class MainActivity extends AppCompatActivity {
                 mImageDetails.setText(result);
             }
         }.execute();
+        //Set butto to visible
+        View viewInfoBtnView = findViewById(R.id.viewInfoBtn);
+        viewInfoBtnView.setVisibility(View.VISIBLE);
+        Button viewInfoBtn = (Button)findViewById(R.id.viewInfoBtn);
+        viewInfoBtn.setText("View info about " + bestRes);
     }
 
     public Bitmap scaleBitmapDown(Bitmap bitmap, int maxDimension) {
@@ -357,6 +367,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if (!filter && bestResult.isEmpty()) {
                         bestResult = results.get(i);
+                        bestRes = bestResult;
                     }
                 }
             }
@@ -372,6 +383,8 @@ public class MainActivity extends AppCompatActivity {
         if (!isFood) {
             message = "Please choose a photo of food.";
         }
+
+
         return message;
     }
 }
