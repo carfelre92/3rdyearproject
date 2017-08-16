@@ -89,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        startCamera();
+
         //Button takePhoto = (Button) findViewById(R.id.fab);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
             Uri photoUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", getCameraFile());
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            //intent.
             startActivityForResult(intent, CAMERA_IMAGE_REQUEST);
         }
     }
@@ -333,6 +336,7 @@ public class MainActivity extends AppCompatActivity {
         specificWords.add("meal"); //could be part of a desired result. For example: oatmeal
         specificWords.add("fruit"); //could be part of a desired result. For example: kiwifruit
         specificWords.add("yellow"); //could be part of a desired result. For example: Yellow capsicum
+        specificWords.add("green"); //could be part of green apple
 
 
         //Used to check if image contains food
