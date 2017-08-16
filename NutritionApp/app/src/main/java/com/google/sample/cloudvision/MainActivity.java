@@ -83,13 +83,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        View viewInfoBtn = findViewById(R.id.viewInfoBtn);
-        viewInfoBtn.setVisibility(View.INVISIBLE);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        startCamera();
 
         //Button takePhoto = (Button) findViewById(R.id.fab);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -289,9 +284,15 @@ public class MainActivity extends AppCompatActivity {
                 mImageDetails.setText(result);
             }
         }.execute();
-        //Set butto to visible
+        //Set content to visible
         View viewInfoBtnView = findViewById(R.id.viewInfoBtn);
         viewInfoBtnView.setVisibility(View.VISIBLE);
+        View otherResultsBtnView = findViewById(R.id.otherResultsBtn);
+        otherResultsBtnView.setVisibility(View.VISIBLE);
+        View otherResultsTxtView = findViewById(R.id.otherResultsTxt);
+        otherResultsTxtView.setVisibility(View.VISIBLE);
+
+        //Change button text
         Button viewInfoBtn = (Button)findViewById(R.id.viewInfoBtn);
         viewInfoBtn.setText("View info about " + bestRes);
     }
@@ -317,7 +318,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String convertResponseToString(BatchAnnotateImagesResponse response) {
-        String message = "I found these things:\n\nBest result: ";
+        String message = "Nice ";
         List<EntityAnnotation> labels = response.getResponses().get(0).getLabelAnnotations();
 
         List<String> results = new ArrayList<String>(); //Holds the unfiltered results
@@ -375,11 +376,18 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
+
+            //For printing just the best result
+            message += bestResult + "!";
+
+            //For printing all results including the best result
+            /*
             message += "\t\t\t" + bestResult + "\n\nAll results: \t\t\t";
             for (int i = 0; i < results.size(); i++) {
                 message += results.get(i);
                 message += "\n\t\t\t\t\t\t\t\t\t\t\t\t"; //Used to indent each result for formatting
             }
+            */
 
         }     else {
             message += "no results";

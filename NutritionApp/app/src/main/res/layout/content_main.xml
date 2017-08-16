@@ -40,8 +40,27 @@
                 android:id="@+id/viewInfoBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
                 android:text="View Info"
-                android:visibility="visible"/>
+                android:textColor="@android:color/background_light"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/otherResultsTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="32dp"
+                android:gravity="center"
+                android:text="Is this not the food you were looking for?"
+                android:visibility="invisible"/>
+
+            <Button
+                android:id="@+id/otherResultsBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="See Other Results"
+                android:visibility="invisible"/>
 
         </LinearLayout>
     </ScrollView>
