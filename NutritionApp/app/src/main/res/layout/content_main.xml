@@ -40,10 +40,12 @@
                 android:id="@+id/viewInfoBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:background="@color/colorPrimary"
                 android:text="View Info"
                 android:textColor="@android:color/background_light"
-                android:visibility="invisible" />
+                android:visibility="invisible"
+                android:onClick="viewInfo"/>
 
             <TextView
                 android:id="@+id/otherResultsTxt"
@@ -60,8 +62,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="See Other Results"
-                android:visibility="invisible"/>
+                android:visibility="invisible"
+                style="?android:attr/borderlessButtonStyle"/>
 
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
+

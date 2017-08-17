@@ -62,6 +62,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+//import static android.provider.AlarmClock.EXTRA_MESSAGE;
+
 public class MainActivity extends AppCompatActivity {
     private static final String CLOUD_VISION_API_KEY = "AIzaSyCI_h7DyA9fhinSFPcN5CCq-8L2tQ-4PSI";
     public static final String FILE_NAME = "temp.jpg";
@@ -77,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mImageDetails;
     private ImageView mMainImage;
     private String bestRes;
+    private Boolean globalIsFood;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -282,19 +285,38 @@ public class MainActivity extends AppCompatActivity {
 
             protected void onPostExecute(String result) {
                 mImageDetails.setText(result);
+                //Sets up and shows UI elements on the result page
+                showResultsBtns();
             }
         }.execute();
-        //Set content to visible
-        View viewInfoBtnView = findViewById(R.id.viewInfoBtn);
-        viewInfoBtnView.setVisibility(View.VISIBLE);
-        View otherResultsBtnView = findViewById(R.id.otherResultsBtn);
-        otherResultsBtnView.setVisibility(View.VISIBLE);
-        View otherResultsTxtView = findViewById(R.id.otherResultsTxt);
-        otherResultsTxtView.setVisibility(View.VISIBLE);
 
-        //Change button text
-        Button viewInfoBtn = (Button)findViewById(R.id.viewInfoBtn);
-        viewInfoBtn.setText("View info about " + bestRes);
+    }
+
+    private void showResultsBtns() {
+        //This destroys the loading animation - Uncomment when loading icon is implemented
+        //findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+
+        if(globalIsFood) {
+            //Set content to visible
+            View viewInfoBtnView = findViewById(R.id.viewInfoBtn);
+            viewInfoBtnView.setVisibility(View.VISIBLE);
+            View otherResultsBtnView = findViewById(R.id.otherResultsBtn);
+            otherResultsBtnView.setVisibility(View.VISIBLE);
+            View otherResultsTxtView = findViewById(R.id.otherResultsTxt);
+            otherResultsTxtView.setVisibility(View.VISIBLE);
+
+            //Change button text
+            Button viewInfoBtn = (Button)findViewById(R.id.viewInfoBtn);
+            viewInfoBtn.setText("View info about " + bestRes);
+        } else {
+            //Set content to invisible
+            View viewInfoBtnView = findViewById(R.id.viewInfoBtn);
+            viewInfoBtnView.setVisibility(View.INVISIBLE);
+            View otherResultsBtnView = findViewById(R.id.otherResultsBtn);
+            otherResultsBtnView.setVisibility(View.INVISIBLE);
+            View otherResultsTxtView = findViewById(R.id.otherResultsTxt);
+            otherResultsTxtView.setVisibility(View.INVISIBLE);
+        }
     }
 
     public Bitmap scaleBitmapDown(Bitmap bitmap, int maxDimension) {
@@ -330,6 +352,7 @@ public class MainActivity extends AppCompatActivity {
         filterWords.add("family");
         filterWords.add("dish");
         filterWords.add("vegetable");
+        filterWords.add("cuisine");
 
         //Unwanted words that could be part of a desired result
         List<String> specificWords = new ArrayList<String>(); //Holds the specific words to filter out
@@ -339,9 +362,8 @@ public class MainActivity extends AppCompatActivity {
         specificWords.add("yellow"); //could be part of a desired result. For example: Yellow capsicum
         specificWords.add("green"); //could be part of green apple
 
-
-        //Used to check if image contains food
-        boolean isFood = false;
+        //Used to hold if the picture is food or not
+        Boolean isFood = false;
 
         //Used to hold the best result
         String bestResult = "";
@@ -396,7 +418,34 @@ public class MainActivity extends AppCompatActivity {
             message = "Please choose a photo of food.";
         }
 
+        //Sends value to global variable for using in other method
+        globalIsFood = isFood;
 
         return message;
     }
+
+//    //View info button activity
+//    Button viewInfoBtn = (Button) findViewById(R.id.viewInfoBtn);
+//    viewInfoBtn.setOnClickListener(new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            // handle click
+//        }
+//    });
+
+    public void viewInfo(View view) {
+        Intent intent = new Intent(this, NutritionInfo.class);
+        //intent.putExtra(EXTRA_MESSAGE, bestRes);
+        startActivity(intent);
+    }
+
+    /** Called when the user taps the Send button
+    public void sendMessage(View view) {
+        Intent intent = new Intent(this, DisplayMessageActivity.class);
+        EditText editText = (EditText) findViewById(R.id.editText2);
+        String message = editText.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+    } */
+
 }
