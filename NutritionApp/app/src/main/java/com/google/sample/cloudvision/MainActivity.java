@@ -17,16 +17,20 @@
 package com.google.sample.cloudvision;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AlertDialog;
@@ -35,6 +39,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,7 +67,7 @@ import java.util.List;
 import java.util.Locale;
 import android.view.MotionEvent;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity {
     private static final String CLOUD_VISION_API_KEY = "AIzaSyCI_h7DyA9fhinSFPcN5CCq-8L2tQ-4PSI";
     public static final String FILE_NAME = "temp.jpg";
     private static final String ANDROID_CERT_HEADER = "X-Android-Cert";
@@ -77,48 +82,73 @@ public class MainActivity extends AppCompatActivity {
     private TextView mImageDetails;
     private ImageView mMainImage;
 
+    //new
+    private static final int CENTRAL_PAGE_INDEX = 1;
+    public VerticalPager mVerticalPager;
+
     //sukim
-    private GestureDetectorCompat gestureObject;
+//    private GestureDetectorCompat gestureObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+      startCamera();
+      findViews();
+    }
+//new
+private void findViews() {
+    mVerticalPager = (VerticalPager) findViewById(R.id.activity_main_vertical_pager);
+    initViews();
+}
 
-        //sukim
-        gestureObject = new GestureDetectorCompat(this, new LearnGesture());
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder
-                        .setMessage(R.string.dialog_select_prompt)
-                        .setPositiveButton(R.string.dialog_select_gallery, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                startGalleryChooser();
-                            }
-                        })
-                        .setNegativeButton(R.string.dialog_select_camera, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                startCamera();
-                            }
-                        });
-                builder.create().show();
-            }
-        });
-
-        mImageDetails = (TextView) findViewById(R.id.image_details);
-        mMainImage = (ImageView) findViewById(R.id.main_image);
+    private void initViews() {
+        snapPageWhenLayoutIsReady(mVerticalPager, CENTRAL_PAGE_INDEX);
     }
 
-    //sukim
+    private void snapPageWhenLayoutIsReady(final View pageView, final int page) {
+		/*
+		 * VerticalPager is not fully initialized at the moment, so we want to snap to the central page only when it
+		 * layout and measure all its pages.
+		 */
+        pageView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onGlobalLayout() {
+                mVerticalPager.snapToPage(page, VerticalPager.PAGE_SNAP_DURATION_INSTANT);
+
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+                    // recommended removeOnGlobalLayoutListener method is available since API 16 only
+                    pageView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                else
+                    removeGlobalOnLayoutListenerForJellyBean(pageView);
+            }
+
+            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+            private void removeGlobalOnLayoutListenerForJellyBean(final View pageView) {
+                pageView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //EventBus.getInstance().register(this);
+    }
+
+    @Override
+    protected void onPause() {
+       // EventBus.getInstance().unregister(this);
+        super.onPause();
+    }
+
+   // @Subscribe
+    public void onLocationChanged(PageChangedEvent event) {
+        mVerticalPager.setPagingEnabled(event.hasVerticalNeighbors());
+    }
+
+   /** //sukim
     @Override
     public boolean onTouchEvent(MotionEvent event){
         this.gestureObject.onTouchEvent(event);
@@ -137,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     }
+    **/
 
     public void startGalleryChooser() {
         if (PermissionUtils.requestPermission(this, GALLERY_PERMISSIONS_REQUEST, Manifest.permission.READ_EXTERNAL_STORAGE)) {
