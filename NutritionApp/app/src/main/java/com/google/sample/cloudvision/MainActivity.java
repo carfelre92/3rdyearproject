@@ -93,7 +93,8 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-      startCamera();
+
+      //startCamera();
       findViews();
     }
 //new
@@ -148,26 +149,7 @@ private void findViews() {
         mVerticalPager.setPagingEnabled(event.hasVerticalNeighbors());
     }
 
-   /** //sukim
-    @Override
-    public boolean onTouchEvent(MotionEvent event){
-        this.gestureObject.onTouchEvent(event);
-        return super.onTouchEvent(event);
-    }
 
-    class LearnGesture extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY){
-            if(event2.getX() > event1.getX()){
-                startCamera();
-
-            } else if (event2.getX() < event1.getX()) {
-
-            }
-            return true;
-        }
-    }
-    **/
 
     public void startGalleryChooser() {
         if (PermissionUtils.requestPermission(this, GALLERY_PERMISSIONS_REQUEST, Manifest.permission.READ_EXTERNAL_STORAGE)) {
