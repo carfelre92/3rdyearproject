@@ -17,6 +17,7 @@
 package com.google.sample.cloudvision;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -36,6 +37,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,8 +83,13 @@ public class MainActivity extends AppCompatActivity {
     private String bestRes;
     private Boolean globalIsFood;
 
+    private ProgressDialog progress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        System.out.println("App has entered the onCreate() method.");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -200,6 +207,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void callCloudVision(final Bitmap bitmap) throws IOException {
+
+        System.out.println("App has entered the callCloudVision() method.");
+
+        View allPageContent = findViewById(R.id.scrollView1);
+        allPageContent.setVisibility(View.GONE);
+        showSpinner();
+
         // Switch text to loading
         mImageDetails.setText(R.string.loading_message);
 
@@ -284,6 +298,10 @@ public class MainActivity extends AppCompatActivity {
             }
 
             protected void onPostExecute(String result) {
+                hideSpinner();
+                View allPageContent = findViewById(R.id.scrollView1);
+                allPageContent.setVisibility(View.VISIBLE);
+
                 mImageDetails.setText(result);
                 //Sets up and shows UI elements on the result page
                 showResultsBtns();
@@ -293,8 +311,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showResultsBtns() {
-        //This destroys the loading animation - Uncomment when loading icon is implemented
-        //findViewById(R.id.loadingPanel).setVisibility(View.GONE);
 
         if(globalIsFood) {
             //Set content to visible
@@ -437,6 +453,18 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, NutritionInfo.class);
         //intent.putExtra(EXTRA_MESSAGE, bestRes);
         startActivity(intent);
+    }
+
+    private void showSpinner() {
+        progress = new ProgressDialog(this);
+        progress.setMessage("Please wait... We've sent a raven to Bran to identify this food....");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setIndeterminate(true);
+        progress.show();
+    }
+
+    private void hideSpinner() {
+        progress.hide();
     }
 
     /** Called when the user taps the Send button
