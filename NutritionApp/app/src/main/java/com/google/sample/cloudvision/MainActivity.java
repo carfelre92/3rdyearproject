@@ -457,7 +457,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showSpinner() {
         progress = new ProgressDialog(this);
-        progress.setMessage("Please wait... We've sent a raven to Bran to identify this food....");
+        progress.setMessage("We've sent a raven to Bran to identify this food... Please wait... ");
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setIndeterminate(true);
         progress.show();
