@@ -43,7 +43,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-
+        <activity
+            android:name=".OtherResults"
+            android:label="Other Results"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

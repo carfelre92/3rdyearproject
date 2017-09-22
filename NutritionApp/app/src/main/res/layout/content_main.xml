@@ -61,11 +61,12 @@
 
             <Button
                 android:id="@+id/otherResultsBtn"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="otherResults"
                 android:text="See Other Results"
-                android:visibility="invisible"
-                style="?android:attr/borderlessButtonStyle"/>
+                android:visibility="invisible" />
 
         </LinearLayout>
     </ScrollView>

@@ -36,6 +36,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -64,6 +65,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
+
 //import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class MainActivity extends AppCompatActivity {
@@ -81,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mImageDetails;
     private ImageView mMainImage;
     private String bestRes;
+    private List<String> results;
     private Boolean globalIsFood;
 
     private ProgressDialog progress;
@@ -359,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
         String message = "Nice ";
         List<EntityAnnotation> labels = response.getResponses().get(0).getLabelAnnotations();
 
-        List<String> results = new ArrayList<String>(); //Holds the unfiltered results
+        results = new ArrayList<String>(); //Holds the unfiltered results
 
         //Common or unwanted words to be filtered out (separated by a space)
         List<String> filterWords = new ArrayList<>(); //Holds the words to filter out
@@ -465,6 +469,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void hideSpinner() {
         progress.hide();
+    }
+
+    public void otherResults(View view) {
+        Intent intent = new Intent(this, OtherResults.class);
+        intent.putStringArrayListExtra("results", (ArrayList<String>) results);
+        startActivity(intent);
     }
 
     /** Called when the user taps the Send button
