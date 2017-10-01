@@ -15,6 +15,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:background="@color/colorPrimary"
+        android:onClick="takeMeHome"
         android:text="No, take me home"
         android:textColor="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -56,6 +56,11 @@ public class OtherResults extends AppCompatActivity {
             b.setVisibility(View.VISIBLE);
         }
 
-
     }
+
+    public void takeMeHome(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
 }

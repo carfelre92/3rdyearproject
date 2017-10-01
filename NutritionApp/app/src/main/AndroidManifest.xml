@@ -36,9 +36,8 @@
 
         <activity
             android:name=".NutritionInfo"
-            android:label="Nutrition App"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="Nutrition Info"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
