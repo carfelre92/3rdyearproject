@@ -1,16 +1,12 @@
 package com.google.sample.cloudvision;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
-
 /**
  * Created by SuKim on 15/08/2017.
  */
@@ -22,7 +18,7 @@ public class CentralFragment extends Fragment {
     Button floatingButton;
     MainActivity mainActivity = new MainActivity();
 
-    private TextView mImageDetails;
+   // private TextView mImageDetails;
     private ImageView mMainImage;
 
     @Override

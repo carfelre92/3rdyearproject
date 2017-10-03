@@ -94,14 +94,36 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-      //startCamera();
-      findViews();
+        findViews();
     }
-//new
-private void findViews() {
-    mVerticalPager = (VerticalPager) findViewById(R.id.activity_main_vertical_pager);
-    initViews();
-}
+    //new
+    private void findViews() {
+        mVerticalPager = (VerticalPager) findViewById(R.id.activity_main_vertical_pager);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder
+                        .setMessage(R.string.dialog_select_prompt)
+                        .setPositiveButton(R.string.dialog_select_gallery, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startGalleryChooser();
+                            }
+                        })
+                        .setNegativeButton(R.string.dialog_select_camera, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startCamera();
+                            }
+                        });
+                builder.create().show();
+            }
+        });
+
+        initViews();
+    }
 
     private void initViews() {
         snapPageWhenLayoutIsReady(mVerticalPager, CENTRAL_PAGE_INDEX);
@@ -140,16 +162,35 @@ private void findViews() {
 
     @Override
     protected void onPause() {
-       // EventBus.getInstance().unregister(this);
+        // EventBus.getInstance().unregister(this);
         super.onPause();
     }
 
-   // @Subscribe
+    // @Subscribe
     public void onLocationChanged(PageChangedEvent event) {
         mVerticalPager.setPagingEnabled(event.hasVerticalNeighbors());
     }
 
+    /** //sukim
+     @Override
+     public boolean onTouchEvent(MotionEvent event){
+     this.gestureObject.onTouchEvent(event);
+     return super.onTouchEvent(event);
+     }
 
+     class LearnGesture extends GestureDetector.SimpleOnGestureListener {
+     @Override
+     public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY){
+     if(event2.getX() > event1.getX()){
+     startCamera();
+
+     } else if (event2.getX() < event1.getX()) {
+
+     }
+     return true;
+     }
+     }
+     **/
 
     public void startGalleryChooser() {
         if (PermissionUtils.requestPermission(this, GALLERY_PERMISSIONS_REQUEST, Manifest.permission.READ_EXTERNAL_STORAGE)) {
