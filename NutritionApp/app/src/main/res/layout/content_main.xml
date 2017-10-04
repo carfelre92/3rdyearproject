@@ -13,13 +13,17 @@
                 tools:showIn="@layout/activity_main">
 
     <ScrollView
+        android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/image_details"
@@ -33,6 +37,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="fitCenter"/>
+
+            <Button
+                android:id="@+id/viewInfoBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@color/colorPrimary"
+                android:text="View Info"
+                android:textColor="@android:color/background_light"
+                android:visibility="invisible"
+                android:onClick="viewInfo"/>
+
+            <TextView
+                android:id="@+id/otherResultsTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="32dp"
+                android:gravity="center"
+                android:text="Is this not the food you were looking for?"
+                android:visibility="invisible"/>
+
+            <Button
+                android:id="@+id/otherResultsBtn"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="otherResults"
+                android:text="See Other Results"
+                android:visibility="invisible" />
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
+
