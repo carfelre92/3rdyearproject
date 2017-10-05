@@ -455,7 +455,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void viewInfo(View view) {
         Intent intent = new Intent(this, NutritionInfo.class);
-        //intent.putExtra(EXTRA_MESSAGE, bestRes);
+        intent.putExtra("bestRes", bestRes);
+        intent.putExtra(EXTRA_MESSAGE, bestRes);
         startActivity(intent);
     }
 

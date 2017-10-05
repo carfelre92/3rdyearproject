@@ -46,7 +46,6 @@ public class OtherResults extends AppCompatActivity {
         System.out.println("Made it past the first loop!");
 
         // Get the Intent that started this activity and extract the string
-        Intent intent = getIntent();
         ArrayList<String> results = getIntent().getStringArrayListExtra("results");
 
         //Dynamically show the buttons at runtime
