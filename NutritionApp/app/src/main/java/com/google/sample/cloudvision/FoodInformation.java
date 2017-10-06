@@ -15,6 +15,13 @@ public class FoodInformation {
     public String fat;
 
     public FoodInformation() {
+        this.calories = "No data";
+        this.cholesterol = "No data";
+        this.potassium = "No data";
+        this.protein = "No data";
+        this.sodium = "No data";
+        this.carbohydrates = "No data";
+        this.fat = "No data";
     }
 
     public FoodInformation(String calories, String cholesterol, String potassium, String protein, String sodium, String carbohydrates, String fat) {

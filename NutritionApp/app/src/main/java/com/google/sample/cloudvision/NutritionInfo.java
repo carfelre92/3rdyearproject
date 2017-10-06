@@ -34,20 +34,24 @@ public class NutritionInfo extends AppCompatActivity {
         TextView infoTitle = (TextView) findViewById(R.id.infoTitle);
         infoTitle.setText("Nutrition facts about: " + message);
 
+
         dbRef = database.getReferenceFromUrl("https://nutrition-app-b01d3.firebaseio.com/Food").child(message);
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                FoodInformation foodInformation = dataSnapshot.getValue(FoodInformation.class);
+                if (dataSnapshot.exists()){
+                    FoodInformation foodInformation = dataSnapshot.getValue(FoodInformation.class);
 
-                System.out.println("Calories: " + foodInformation.calories);
-                System.out.println("Cholesterol: " + foodInformation.cholesterol);
-                foodInfo.setText("Welcome "+foodInformation.calories+" "+foodInformation.cholesterol);
+                    System.out.println("Calories: " + foodInformation.calories);
+                    System.out.println("Cholesterol: " + foodInformation.cholesterol);
+                    foodInfo.setText("Welcome " + foodInformation.calories + " " + foodInformation.cholesterol);
+                } else {
+                    foodInfo.setText("No nutrition information found for this food.");
+                }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
     }
