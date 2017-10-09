@@ -8,11 +8,224 @@
 
 
     <TextView
+        android:id="@+id/fatVal"
+        android:layout_width="80dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="16"
+        android:textAlignment="center"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/caloriesVal"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/sodiumVal"
+        android:layout_width="80dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="16"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cholesterolVal" />
+
+    <TextView
+        android:id="@+id/potassiumVal"
+        android:layout_width="80dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="16"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sodiumVal" />
+
+    <TextView
+        android:id="@+id/carbohydratesVal"
+        android:layout_width="80dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="16"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/potassiumVal" />
+
+    <TextView
+        android:id="@+id/proteinVal"
+        android:layout_width="80dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="16"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/carbohydratesVal" />
+
+    <TextView
+        android:id="@+id/cholesterolVal"
+        android:layout_width="80dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="16"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fatVal" />
+
+    <TextView
+        android:id="@+id/caloriesVal"
+        android:layout_width="80dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="16"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/valueHeading" />
+
+    <ProgressBar
+        android:id="@+id/loadingIcon"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/proteinText"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Protein"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/proteinVal"
+        app:layout_constraintTop_toBottomOf="@+id/carbohydratesText" />
+
+    <TextView
+        android:id="@+id/carbohydratesText"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Carbohydrates"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/carbohydratesVal"
+        app:layout_constraintTop_toBottomOf="@+id/potassiumText" />
+
+    <TextView
+        android:id="@+id/potassiumText"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Potassium"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/potassiumVal"
+        app:layout_constraintTop_toBottomOf="@+id/sodiumText" />
+
+    <TextView
+        android:id="@+id/sodiumText"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Sodium (Salt)"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/sodiumVal"
+        app:layout_constraintTop_toBottomOf="@+id/cholesterolText" />
+
+    <TextView
+        android:id="@+id/cholesterolText"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Cholesterol"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/sodiumVal"
+        app:layout_constraintTop_toBottomOf="@+id/fatText" />
+
+    <TextView
+        android:id="@+id/fatText"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Total Fat"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/fatVal"
+        app:layout_constraintTop_toBottomOf="@+id/caloriesText" />
+
+    <TextView
+        android:id="@+id/caloriesText"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="Calories"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/caloriesVal"
+        app:layout_constraintTop_toBottomOf="@+id/valueHeading" />
+
+    <TextView
         android:id="@+id/infoTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,10 +234,167 @@
         android:id="@+id/foodInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="TextView"
+        android:layout_marginTop="8dp"
+        android:text="(per 100 grams)"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/infoTitle" />
+
+    <TextView
+        android:id="@+id/caloriesDI"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="N/A"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/caloriesVal"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/valueHeading" />
+
+    <TextView
+        android:id="@+id/cholesterolDI"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="N/A"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toRightOf="@+id/fatVal"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/fatDI" />
+
+    <TextView
+        android:id="@+id/sodiumDI"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="N/A"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/fatVal"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cholesterolDI" />
+
+    <TextView
+        android:id="@+id/potassiumDI"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="N/A"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/fatVal"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sodiumDI" />
+
+    <TextView
+        android:id="@+id/carbohydratesDI"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="N/A"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toRightOf="@+id/fatVal"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/potassiumDI" />
+
+    <TextView
+        android:id="@+id/proteinDI"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="N/A"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/fatVal"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/carbohydratesDI" />
+
+    <TextView
+        android:id="@+id/fatDI"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="N/A"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toRightOf="@+id/fatVal"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/caloriesDI" />
+
+    <TextView
+        android:id="@+id/valueHeading"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="Value"
+        android:textAlignment="center"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/foodInfo" />
+
+    <TextView
+        android:id="@+id/nutrientHeading"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="Nutrient"
+        android:textAlignment="center"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/valueHeading"
+        app:layout_constraintTop_toBottomOf="@+id/foodInfo" />
+
+    <TextView
+        android:id="@+id/dailyIntakeHeading"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="DI (%)"
+        android:textAlignment="center"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/valueHeading"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/foodInfo" />
 </android.support.constraint.ConstraintLayout>
 
