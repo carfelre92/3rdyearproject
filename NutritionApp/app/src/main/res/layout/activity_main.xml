@@ -19,12 +19,6 @@
 
 
 
-
-
-
-
-
-
     <fragment
         android:id="@+id/main_bottom_fragment"
         android:layout_width="match_parent"
