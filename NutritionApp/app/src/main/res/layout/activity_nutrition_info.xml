@@ -250,15 +250,14 @@
         android:layout_width="0dp"
         android:layout_height="25dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginRight="48dp"
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="N/A"
         android:textAlignment="center"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/caloriesVal"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/valueHeading" />
+        app:layout_constraintTop_toBottomOf="@+id/valueHeading"
+        android:layout_marginRight="48dp"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         android:id="@+id/cholesterolDI"
@@ -402,5 +401,33 @@
         app:layout_constraintLeft_toRightOf="@+id/valueHeading"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/foodInfo" />
+
+    <Button
+        android:id="@+id/infoButtonCal"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="48dp"
+        android:layout_marginTop="16dp"
+        android:drawableBottom="@android:drawable/ic_menu_info_details"
+        android:gravity="center"
+        android:text="Button"
+        android:visibility="invisible"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/valueHeading" />
+
+    <TextView
+        android:id="@+id/foodNotFoundText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textColor="@android:color/holo_red_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
 

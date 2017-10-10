@@ -39,7 +39,7 @@ public class NutritionInfo extends AppCompatActivity {
     final static int CAR_DI = 310; //g
     final static double PRO_DI = 50.0; //g
 
-    private TextView foodInfo;
+    private TextView foodNotFoundText;
     private ProgressBar loadingIcon;
 
     private TextView caloriesText;
@@ -72,7 +72,7 @@ public class NutritionInfo extends AppCompatActivity {
         setContentView(R.layout.activity_nutrition_info);
 
         //Get all components that will be changed at runtime
-        foodInfo = (TextView) findViewById(R.id.foodInfo);
+        foodNotFoundText = (TextView) findViewById(R.id.foodNotFoundText);
         loadingIcon = (ProgressBar) findViewById(R.id.loadingIcon);
 
         caloriesText = (TextView) findViewById(R.id.caloriesText);
@@ -98,6 +98,8 @@ public class NutritionInfo extends AppCompatActivity {
         potassiumDI = (TextView) findViewById(R.id.potassiumDI);
         carbohydratesDI = (TextView) findViewById(R.id.carbohydratesDI);
         proteinDI = (TextView) findViewById(R.id.proteinDI);
+
+        foodNotFoundText.setVisibility(View.GONE);
 
         caloriesText.setVisibility(View.GONE);
         fatText.setVisibility(View.GONE);
@@ -145,6 +147,7 @@ public class NutritionInfo extends AppCompatActivity {
                     proteinVal.setText(foodInformation.protein);
 
                     //Calc may not be working correctly
+                    //Or figures may be incorrect
 
                     //Sets rounding format
                     DecimalFormat df = new DecimalFormat("#0.00");
@@ -184,7 +187,8 @@ public class NutritionInfo extends AppCompatActivity {
                     //foodInfo.setText("Welcome " + foodInformation.calories + " " + foodInformation.cholesterol);
                 } else {
                     loadingIcon.setVisibility(View.GONE);
-                    foodInfo.setText("No nutrition information found for this food.");
+                    foodNotFoundText.setVisibility(View.VISIBLE);
+                    foodNotFoundText.setText("No nutrition information found for this food.");
                 }
             }
 
