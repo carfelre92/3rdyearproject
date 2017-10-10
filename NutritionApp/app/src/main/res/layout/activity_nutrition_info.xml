@@ -9,21 +9,21 @@
 
     <TextView
         android:id="@+id/fatVal"
-        android:layout_width="80dp"
+        android:layout_width="60dp"
         android:layout_height="25dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="16"
         android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/caloriesVal"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/caloriesVal" />
 
     <TextView
         android:id="@+id/sodiumVal"
-        android:layout_width="80dp"
+        android:layout_width="60dp"
         android:layout_height="25dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -37,7 +37,7 @@
 
     <TextView
         android:id="@+id/potassiumVal"
-        android:layout_width="80dp"
+        android:layout_width="60dp"
         android:layout_height="25dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -51,7 +51,7 @@
 
     <TextView
         android:id="@+id/carbohydratesVal"
-        android:layout_width="80dp"
+        android:layout_width="60dp"
         android:layout_height="25dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -65,7 +65,7 @@
 
     <TextView
         android:id="@+id/proteinVal"
-        android:layout_width="80dp"
+        android:layout_width="60dp"
         android:layout_height="25dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -79,7 +79,7 @@
 
     <TextView
         android:id="@+id/cholesterolVal"
-        android:layout_width="80dp"
+        android:layout_width="60dp"
         android:layout_height="25dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -93,7 +93,7 @@
 
     <TextView
         android:id="@+id/caloriesVal"
-        android:layout_width="80dp"
+        android:layout_width="60dp"
         android:layout_height="25dp"
         android:layout_marginTop="16dp"
         android:gravity="center"
@@ -121,7 +121,7 @@
         android:id="@+id/proteinText"
         android:layout_width="0dp"
         android:layout_height="25dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="48dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
@@ -129,13 +129,14 @@
         android:textAlignment="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/proteinVal"
-        app:layout_constraintTop_toBottomOf="@+id/carbohydratesText" />
+        app:layout_constraintTop_toBottomOf="@+id/carbohydratesText"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <TextView
         android:id="@+id/carbohydratesText"
         android:layout_width="0dp"
         android:layout_height="25dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="48dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
@@ -143,13 +144,14 @@
         android:textAlignment="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/carbohydratesVal"
-        app:layout_constraintTop_toBottomOf="@+id/potassiumText" />
+        app:layout_constraintTop_toBottomOf="@+id/potassiumText"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <TextView
         android:id="@+id/potassiumText"
         android:layout_width="0dp"
         android:layout_height="25dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="48dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
@@ -157,13 +159,14 @@
         android:textAlignment="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/potassiumVal"
-        app:layout_constraintTop_toBottomOf="@+id/sodiumText" />
+        app:layout_constraintTop_toBottomOf="@+id/sodiumText"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <TextView
         android:id="@+id/sodiumText"
         android:layout_width="0dp"
         android:layout_height="25dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="48dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
@@ -171,13 +174,14 @@
         android:textAlignment="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/sodiumVal"
-        app:layout_constraintTop_toBottomOf="@+id/cholesterolText" />
+        app:layout_constraintTop_toBottomOf="@+id/cholesterolText"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <TextView
         android:id="@+id/cholesterolText"
         android:layout_width="0dp"
         android:layout_height="25dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="48dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
@@ -192,7 +196,7 @@
         android:id="@+id/fatText"
         android:layout_width="0dp"
         android:layout_height="25dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="48dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
@@ -200,13 +204,14 @@
         android:textAlignment="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/fatVal"
-        app:layout_constraintTop_toBottomOf="@+id/caloriesText" />
+        app:layout_constraintTop_toBottomOf="@+id/caloriesText"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <TextView
         android:id="@+id/caloriesText"
         android:layout_width="0dp"
         android:layout_height="25dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="48dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="16dp"
         android:gravity="center"
@@ -245,7 +250,7 @@
         android:layout_width="0dp"
         android:layout_height="25dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="48dp"
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="N/A"
@@ -260,7 +265,7 @@
         android:layout_width="0dp"
         android:layout_height="25dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="48dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="N/A"
@@ -275,7 +280,7 @@
         android:layout_width="0dp"
         android:layout_height="25dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="48dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="N/A"
@@ -290,7 +295,7 @@
         android:layout_width="0dp"
         android:layout_height="25dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="48dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="N/A"
@@ -305,12 +310,12 @@
         android:layout_width="0dp"
         android:layout_height="25dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="48dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="N/A"
         android:textAlignment="center"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/fatVal"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/potassiumDI" />
@@ -320,7 +325,7 @@
         android:layout_width="0dp"
         android:layout_height="25dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="48dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="N/A"
@@ -335,18 +340,19 @@
         android:layout_width="0dp"
         android:layout_height="25dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="48dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="N/A"
         android:textAlignment="center"
         app:layout_constraintLeft_toRightOf="@+id/fatVal"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/caloriesDI" />
+        app:layout_constraintTop_toBottomOf="@+id/caloriesDI"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <TextView
         android:id="@+id/valueHeading"
-        android:layout_width="80dp"
+        android:layout_width="60dp"
         android:layout_height="30dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -365,7 +371,7 @@
         android:id="@+id/nutrientHeading"
         android:layout_width="0dp"
         android:layout_height="30dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="48dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="32dp"
         android:background="@color/colorAccent"
@@ -384,7 +390,7 @@
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="48dp"
         android:layout_marginTop="32dp"
         android:background="@color/colorAccent"
         android:gravity="center"

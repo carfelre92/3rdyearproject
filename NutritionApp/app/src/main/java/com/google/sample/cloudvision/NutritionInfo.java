@@ -18,7 +18,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import static java.lang.Math.round;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
+import static java.lang.StrictMath.round;
+
 
 public class NutritionInfo extends AppCompatActivity {
 
@@ -142,16 +146,17 @@ public class NutritionInfo extends AppCompatActivity {
 
                     //Calc may not be working correctly
 
-                    //int val1 = Integer.parseInt(foodInformation.fat.replaceAll("[^0-9]", ""));
-                    //int val2 = (val1 / FAT_DI) * 100;
+                    //Sets rounding format
+                    DecimalFormat df = new DecimalFormat("#0.00");
+                    df.setRoundingMode(RoundingMode.HALF_UP);
 
                     caloriesDI.setText("N/A");
-                    //fatDI.setText(Double.toString(round(( FAT_DI) * 100), 1));
-                    //cholesterolDI.setText(foodInformation.cholesterol);
-                    //sodiumDI.setText(foodInformation.sodium);
-                    //potassiumDI.setText(foodInformation.potassium);
-                    //carbohydratesDI.setText(foodInformation.carbohydrates);
-                    //proteinDI.setText(foodInformation.protein);
+                    fatDI.setText((df.format(((Integer.parseInt(foodInformation.fat.replaceAll("[^0-9]", ""))) / FAT_DI) * 100)) + "%");
+                    cholesterolDI.setText((df.format(((Integer.parseInt(foodInformation.cholesterol.replaceAll("[^0-9]", ""))) / CHO_DI) * 100)) + "%");
+                    sodiumDI.setText((df.format(((Integer.parseInt(foodInformation.sodium.replaceAll("[^0-9]", ""))) / SOD_DI) * 100)) + "%");
+                    potassiumDI.setText((df.format(((Integer.parseInt(foodInformation.potassium.replaceAll("[^0-9]", ""))) / POT_DI) * 100)) + "%");
+                    carbohydratesDI.setText((df.format(((Integer.parseInt(foodInformation.carbohydrates.replaceAll("[^0-9]", ""))) / CAR_DI) * 100)) + "%");
+                    proteinDI.setText((df.format(((Integer.parseInt(foodInformation.protein.replaceAll("[^0-9]", ""))) / PRO_DI) * 100)) + "%");
 
                     loadingIcon.setVisibility(View.GONE);
                     caloriesText.setVisibility(View.VISIBLE);
