@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
+
 public class OtherResults extends AppCompatActivity {
 
     @Override
@@ -46,7 +48,6 @@ public class OtherResults extends AppCompatActivity {
         System.out.println("Made it past the first loop!");
 
         // Get the Intent that started this activity and extract the string
-        Intent intent = getIntent();
         ArrayList<String> results = getIntent().getStringArrayListExtra("results");
 
         //Dynamically show the buttons at runtime
@@ -56,11 +57,36 @@ public class OtherResults extends AppCompatActivity {
             b.setVisibility(View.VISIBLE);
         }
 
+        //Add onClick listeners for each button
+        for(int i = 0; i < results.size(); i++) {
+            Button b = buttons.get(i);
+            setOnClick(b, b.getText().toString());
+        }
+
     }
 
     public void takeMeHome(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+//    Button b1 = new Button();
+//    String something = "something";
+//    Button b2 = new Button();
+//    String anotherSomething = "anotherSomething";
+//    setOnClick(b1, something);
+//    setOnClick(b2, anotherSomething);
+
+    private void setOnClick(final Button btn, final String food){
+        final Intent i = new Intent(this, NutritionInfo.class);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = i;
+                intent.putExtra("bestRes", food);
+                startActivity(intent);
+            }
+        });
     }
 
 }
