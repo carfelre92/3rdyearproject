@@ -17,30 +17,24 @@
 package com.google.sample.cloudvision;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.FileProvider;
-import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -67,12 +61,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import android.view.MotionEvent;
 
-public class MainActivity extends FragmentActivity {
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
+//import static android.provider.AlarmClock.EXTRA_MESSAGE;
+
+public class MainActivity extends AppCompatActivity {
     private static final String CLOUD_VISION_API_KEY = "AIzaSyCI_h7DyA9fhinSFPcN5CCq-8L2tQ-4PSI";
     public static final String FILE_NAME = "temp.jpg";
     private static final String ANDROID_CERT_HEADER = "X-Android-Cert";
@@ -92,10 +89,6 @@ public class MainActivity extends FragmentActivity {
 
     private ProgressDialog progress;
 
-
-    private static final int CENTRAL_PAGE_INDEX = 1;
-    public VerticalPager mVerticalPager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -107,11 +100,7 @@ public class MainActivity extends FragmentActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        findViews();
-    }
-    //new
-    private void findViews() {
-        mVerticalPager = (VerticalPager) findViewById(R.id.activity_main_vertical_pager);
+        //Button takePhoto = (Button) findViewById(R.id.fab);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,51 +124,8 @@ public class MainActivity extends FragmentActivity {
             }
         });
 
-        initViews();
-    }
-
-    private void initViews() {
-        snapPageWhenLayoutIsReady(mVerticalPager, CENTRAL_PAGE_INDEX);
-    }
-
-    private void snapPageWhenLayoutIsReady(final View pageView, final int page) {
-		/*
-		 * VerticalPager is not fully initialized at the moment, so we want to snap to the central page only when it
-		 * layout and measure all its pages.
-		 */
-        pageView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @SuppressWarnings("deprecation")
-            @Override
-            public void onGlobalLayout() {
-                mVerticalPager.snapToPage(page, VerticalPager.PAGE_SNAP_DURATION_INSTANT);
-
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
-                    // recommended removeOnGlobalLayoutListener method is available since API 16 only
-                    pageView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                else
-                    removeGlobalOnLayoutListenerForJellyBean(pageView);
-            }
-
-            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-            private void removeGlobalOnLayoutListenerForJellyBean(final View pageView) {
-                pageView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-            }
-        });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    // @Subscribe
-    public void onLocationChanged(PageChangedEvent event) {
-        mVerticalPager.setPagingEnabled(event.hasVerticalNeighbors());
+        mImageDetails = (TextView) findViewById(R.id.image_details);
+        mMainImage = (ImageView) findViewById(R.id.main_image);
     }
 
     public void startGalleryChooser() {
@@ -413,9 +359,7 @@ public class MainActivity extends FragmentActivity {
         return Bitmap.createScaledBitmap(bitmap, resizedWidth, resizedHeight, false);
     }
 
-
     private String convertResponseToString(BatchAnnotateImagesResponse response) {
-      
         String message = "Nice ";
         List<EntityAnnotation> labels = response.getResponses().get(0).getLabelAnnotations();
 
@@ -446,6 +390,13 @@ public class MainActivity extends FragmentActivity {
 
         if (labels != null) {
             for (EntityAnnotation label : labels) {
+                results.add(String.format(label.getDescription()));
+                for (int i = 0; i < results.size(); i++) {
+
+                    //Checks if image is food
+                    if (results.get(i).contains("food")) {
+                        isFood = true;
+                    }
 
                     //Searches for the most likely result
                     //Iterates through filterWords and checks result(i)
@@ -480,14 +431,9 @@ public class MainActivity extends FragmentActivity {
             }
             */
 
-            for (String filter : filteredMessage) {
-                message += filter;
-                message += "\n";
-            }
         }     else {
             message += "no results";
         }
-
         if (!isFood) {
             message = "Please choose a photo of food.";
         }
