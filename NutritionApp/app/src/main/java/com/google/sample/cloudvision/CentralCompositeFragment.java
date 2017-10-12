@@ -55,9 +55,9 @@ public class CentralCompositeFragment extends Fragment{
 
     private void populateHozizontalPager() {
         ArrayList<Class<? extends Fragment>> pages = new ArrayList<Class<? extends Fragment>>();
-        pages.add(LeftFragment.class);
+        //pages.add(LeftFragment.class);
         pages.add(CentralFragment.class);
-        pages.add(RightFragment.class);
+       // pages.add(RightFragment.class);
         mCentralPageIndex = pages.indexOf(CentralFragment.class);
         mHorizontalPager.setAdapter(new FragmentsClassesPagerAdapter(getChildFragmentManager(), getActivity(), pages));
 

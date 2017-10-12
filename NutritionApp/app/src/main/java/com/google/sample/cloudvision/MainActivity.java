@@ -82,12 +82,9 @@ public class MainActivity extends FragmentActivity {
     private TextView mImageDetails;
     private ImageView mMainImage;
 
-    //new
+
     private static final int CENTRAL_PAGE_INDEX = 1;
     public VerticalPager mVerticalPager;
-
-    //sukim
-//    private GestureDetectorCompat gestureObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,12 +154,10 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //EventBus.getInstance().register(this);
     }
 
     @Override
     protected void onPause() {
-        // EventBus.getInstance().unregister(this);
         super.onPause();
     }
 
@@ -170,27 +165,6 @@ public class MainActivity extends FragmentActivity {
     public void onLocationChanged(PageChangedEvent event) {
         mVerticalPager.setPagingEnabled(event.hasVerticalNeighbors());
     }
-
-    /** //sukim
-     @Override
-     public boolean onTouchEvent(MotionEvent event){
-     this.gestureObject.onTouchEvent(event);
-     return super.onTouchEvent(event);
-     }
-
-     class LearnGesture extends GestureDetector.SimpleOnGestureListener {
-     @Override
-     public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY){
-     if(event2.getX() > event1.getX()){
-     startCamera();
-
-     } else if (event2.getX() < event1.getX()) {
-
-     }
-     return true;
-     }
-     }
-     **/
 
     public void startGalleryChooser() {
         if (PermissionUtils.requestPermission(this, GALLERY_PERMISSIONS_REQUEST, Manifest.permission.READ_EXTERNAL_STORAGE)) {
