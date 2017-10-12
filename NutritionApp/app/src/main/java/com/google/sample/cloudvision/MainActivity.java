@@ -18,6 +18,7 @@ package com.google.sample.cloudvision;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -40,7 +41,10 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,6 +72,7 @@ import java.util.Locale;
 import android.view.MotionEvent;
 
 public class MainActivity extends FragmentActivity {
+
     private static final String CLOUD_VISION_API_KEY = "AIzaSyCI_h7DyA9fhinSFPcN5CCq-8L2tQ-4PSI";
     public static final String FILE_NAME = "temp.jpg";
     private static final String ANDROID_CERT_HEADER = "X-Android-Cert";
@@ -81,6 +86,11 @@ public class MainActivity extends FragmentActivity {
 
     private TextView mImageDetails;
     private ImageView mMainImage;
+    private String bestRes;
+    private List<String> results;
+    private Boolean globalIsFood;
+
+    private ProgressDialog progress;
 
 
     private static final int CENTRAL_PAGE_INDEX = 1;
@@ -88,8 +98,14 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        System.out.println("App has entered the onCreate() method.");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         findViews();
     }
@@ -186,6 +202,7 @@ public class MainActivity extends FragmentActivity {
             Uri photoUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", getCameraFile());
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            //intent.
             startActivityForResult(intent, CAMERA_IMAGE_REQUEST);
         }
     }
@@ -248,6 +265,13 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void callCloudVision(final Bitmap bitmap) throws IOException {
+
+        System.out.println("App has entered the callCloudVision() method.");
+
+        View allPageContent = findViewById(R.id.scrollView1);
+        allPageContent.setVisibility(View.GONE);
+        showSpinner();
+
         // Switch text to loading
         mImageDetails.setText(R.string.loading_message);
 
@@ -332,9 +356,41 @@ public class MainActivity extends FragmentActivity {
             }
 
             protected void onPostExecute(String result) {
+                hideSpinner();
+                View allPageContent = findViewById(R.id.scrollView1);
+                allPageContent.setVisibility(View.VISIBLE);
+
                 mImageDetails.setText(result);
+                //Sets up and shows UI elements on the result page
+                showResultsBtns();
             }
         }.execute();
+
+    }
+
+    private void showResultsBtns() {
+
+        if(globalIsFood) {
+            //Set content to visible
+            View viewInfoBtnView = findViewById(R.id.viewInfoBtn);
+            viewInfoBtnView.setVisibility(View.VISIBLE);
+            View otherResultsBtnView = findViewById(R.id.otherResultsBtn);
+            otherResultsBtnView.setVisibility(View.VISIBLE);
+            View otherResultsTxtView = findViewById(R.id.otherResultsTxt);
+            otherResultsTxtView.setVisibility(View.VISIBLE);
+
+            //Change button text
+            Button viewInfoBtn = (Button)findViewById(R.id.viewInfoBtn);
+            viewInfoBtn.setText("View info about " + bestRes);
+        } else {
+            //Set content to invisible
+            View viewInfoBtnView = findViewById(R.id.viewInfoBtn);
+            viewInfoBtnView.setVisibility(View.INVISIBLE);
+            View otherResultsBtnView = findViewById(R.id.otherResultsBtn);
+            otherResultsBtnView.setVisibility(View.INVISIBLE);
+            View otherResultsTxtView = findViewById(R.id.otherResultsTxt);
+            otherResultsTxtView.setVisibility(View.INVISIBLE);
+        }
     }
 
     public Bitmap scaleBitmapDown(Bitmap bitmap, int maxDimension) {
@@ -359,23 +415,70 @@ public class MainActivity extends FragmentActivity {
 
 
     private String convertResponseToString(BatchAnnotateImagesResponse response) {
-        String message = "I found these things:\n\n";
+      
+        String message = "Nice ";
         List<EntityAnnotation> labels = response.getResponses().get(0).getLabelAnnotations();
 
-        List<String> filteredMessage = new ArrayList<String>();
-        String filterWords = "produce fruit plant family food";
+        results = new ArrayList<String>(); //Holds the unfiltered results
+
+        //Common or unwanted words to be filtered out (separated by a space)
+        List<String> filterWords = new ArrayList<>(); //Holds the words to filter out
+        filterWords.add("food");
+        filterWords.add("produce");
+        filterWords.add("family");
+        filterWords.add("dish");
+        filterWords.add("vegetable");
+        filterWords.add("cuisine");
+
+        //Unwanted words that could be part of a desired result
+        List<String> specificWords = new ArrayList<String>(); //Holds the specific words to filter out
+        specificWords.add("plant"); //could be part of a desired result. For example: eggplant
+        specificWords.add("meal"); //could be part of a desired result. For example: oatmeal
+        specificWords.add("fruit"); //could be part of a desired result. For example: kiwifruit
+        specificWords.add("yellow"); //could be part of a desired result. For example: Yellow capsicum
+        specificWords.add("green"); //could be part of green apple
+
+        //Used to hold if the picture is food or not
+        Boolean isFood = false;
+
+        //Used to hold the best result
+        String bestResult = "";
 
         if (labels != null) {
             for (EntityAnnotation label : labels) {
 
-                filteredMessage.add(String.format(label.getDescription()));
-                for (int i = 0; i < filteredMessage.size(); i++) {
-                    String filterWord = filteredMessage.get(i);
-                    if (filterWords.contains(filteredMessage.get(i))) {
-                        filteredMessage.remove(i);
+                    //Searches for the most likely result
+                    //Iterates through filterWords and checks result(i)
+                    boolean filter = false; //true if result needs to be filtered
+                    for (int j = 0; j < filterWords.size(); j++) {
+                        if (results.get(i).contains(filterWords.get(j))) {
+                            filter = true;
+                        }
+                    }
+                    //Iterates through specificWords and checks result(i)
+                    for (int j = 0; j < specificWords.size(); j++) {
+                        if (results.get(i).equals(specificWords.get(j))) {
+                            filter = true;
+                        }
+                    }
+                    if (!filter && bestResult.isEmpty()) {
+                        bestResult = results.get(i);
+                        bestRes = bestResult;
                     }
                 }
             }
+
+            //For printing just the best result
+            message += bestResult + "!";
+
+            //For printing all results including the best result
+            /*
+            message += "\t\t\t" + bestResult + "\n\nAll results: \t\t\t";
+            for (int i = 0; i < results.size(); i++) {
+                message += results.get(i);
+                message += "\n\t\t\t\t\t\t\t\t\t\t\t\t"; //Used to indent each result for formatting
+            }
+            */
 
             for (String filter : filteredMessage) {
                 message += filter;
@@ -385,8 +488,57 @@ public class MainActivity extends FragmentActivity {
             message += "no results";
         }
 
+        if (!isFood) {
+            message = "Please choose a photo of food.";
+        }
 
+        //Sends value to global variable for using in other method
+        globalIsFood = isFood;
 
         return message;
     }
+
+//    //View info button activity
+//    Button viewInfoBtn = (Button) findViewById(R.id.viewInfoBtn);
+//    viewInfoBtn.setOnClickListener(new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            // handle click
+//        }
+//    });
+
+    public void viewInfo(View view) {
+        Intent intent = new Intent(this, NutritionInfo.class);
+        intent.putExtra("bestRes", bestRes);
+        intent.putExtra(EXTRA_MESSAGE, bestRes);
+        startActivity(intent);
+    }
+
+    private void showSpinner() {
+        progress = new ProgressDialog(this);
+        progress.setMessage("Please wait while we digest this image... ");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setIndeterminate(true);
+        progress.show();
+    }
+
+    private void hideSpinner() {
+        progress.hide();
+    }
+
+    public void otherResults(View view) {
+        Intent intent = new Intent(this, OtherResults.class);
+        intent.putStringArrayListExtra("results", (ArrayList<String>) results);
+        startActivity(intent);
+    }
+
+    /** Called when the user taps the Send button
+    public void sendMessage(View view) {
+        Intent intent = new Intent(this, DisplayMessageActivity.class);
+        EditText editText = (EditText) findViewById(R.id.editText2);
+        String message = editText.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+    } */
+
 }
