@@ -8,10 +8,10 @@ import android.view.ViewGroup;
  * Created by SuKim on 15/08/2017.
  */
 
-public class TopFragment extends Fragment{
+public class Settings extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View fragmentView = inflater.inflate(R.layout.fragment_top, container, false);
+        View fragmentView = inflater.inflate(R.layout.settings, container, false);
         return fragmentView;
     }
 }

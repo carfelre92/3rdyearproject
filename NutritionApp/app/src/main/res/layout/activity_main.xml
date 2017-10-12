@@ -11,7 +11,7 @@
         android:id="@+id/main_top_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        class="com.google.sample.cloudvision.TopFragment" />
+        class="com.google.sample.cloudvision.Settings" />
 
 
     <include layout="@layout/fragment_central"
@@ -23,6 +23,6 @@
         android:id="@+id/main_bottom_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        class="com.google.sample.cloudvision.BottomFragment" />
+        class="com.google.sample.cloudvision.History" />
 
 </com.google.sample.cloudvision.VerticalPager>
