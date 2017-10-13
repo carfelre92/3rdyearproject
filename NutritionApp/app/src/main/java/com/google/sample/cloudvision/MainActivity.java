@@ -34,6 +34,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.GestureDetectorCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -71,7 +72,7 @@ import java.util.List;
 import java.util.Locale;
 import android.view.MotionEvent;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppCompatActivity {
 
     private static final String CLOUD_VISION_API_KEY = "AIzaSyCI_h7DyA9fhinSFPcN5CCq-8L2tQ-4PSI";
     public static final String FILE_NAME = "temp.jpg";
@@ -106,12 +107,6 @@ public class MainActivity extends FragmentActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        findViews();
-    }
-    //new
-    private void findViews() {
-        mVerticalPager = (VerticalPager) findViewById(R.id.activity_main_vertical_pager);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,7 +129,14 @@ public class MainActivity extends FragmentActivity {
                 builder.create().show();
             }
         });
+        findViews();
 
+        mImageDetails =(TextView) findViewById(R.id.image_details);
+        mMainImage = (ImageView) findViewById(R.id.main_image);
+    }
+    //new
+    private void findViews() {
+        mVerticalPager = (VerticalPager) findViewById(R.id.activity_main_vertical_pager);
         initViews();
     }
 
@@ -446,7 +448,12 @@ public class MainActivity extends FragmentActivity {
 
         if (labels != null) {
             for (EntityAnnotation label : labels) {
+                results.add(String.format(label.getDescription()));
+                for(int i= 0; i< results.size(); i++){
 
+                    if(results.get(i).contains("food")){
+                        isFood = true;
+                    }
                     //Searches for the most likely result
                     //Iterates through filterWords and checks result(i)
                     boolean filter = false; //true if result needs to be filtered
@@ -479,11 +486,6 @@ public class MainActivity extends FragmentActivity {
                 message += "\n\t\t\t\t\t\t\t\t\t\t\t\t"; //Used to indent each result for formatting
             }
             */
-
-            for (String filter : filteredMessage) {
-                message += filter;
-                message += "\n";
-            }
         }     else {
             message += "no results";
         }
@@ -510,7 +512,7 @@ public class MainActivity extends FragmentActivity {
     public void viewInfo(View view) {
         Intent intent = new Intent(this, NutritionInfo.class);
         intent.putExtra("bestRes", bestRes);
-        intent.putExtra(EXTRA_MESSAGE, bestRes);
+        //intent.putExtra(EXTRA_MESSAGE, bestRes);
         startActivity(intent);
     }
 
