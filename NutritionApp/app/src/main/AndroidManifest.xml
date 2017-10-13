@@ -47,6 +47,7 @@
             android:label="Other Results"
             android:screenOrientation="portrait">
         </activity>
+
     </application>
 
 </manifest>
