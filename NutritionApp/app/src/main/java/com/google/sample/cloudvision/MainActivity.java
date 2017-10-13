@@ -72,6 +72,12 @@ import java.util.List;
 import java.util.Locale;
 import android.view.MotionEvent;
 
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String CLOUD_VISION_API_KEY = "AIzaSyCI_h7DyA9fhinSFPcN5CCq-8L2tQ-4PSI";
@@ -97,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int CENTRAL_PAGE_INDEX = 1;
     public VerticalPager mVerticalPager;
 
+    private FirebaseAuth firebaseAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -104,6 +112,15 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Initializing firebase auth object
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        if (firebaseAuth.getCurrentUser() == null) {
+            //profile activity
+            finish();
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        }
 
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        toolbar.setTitle("Nutrition App");
