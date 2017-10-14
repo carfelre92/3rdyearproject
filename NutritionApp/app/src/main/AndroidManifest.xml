@@ -46,17 +46,22 @@
             android:name=".OtherResults"
             android:label="Other Results"
             android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
 
         <activity
+            android:theme="@style/AppTheme.NoActionBar"
             android:name=".LoginActivity"
-            android:label="Login"
+            android:label="Nutrition App"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
+            android:theme="@style/AppTheme.NoActionBar"
             android:name=".RegisterActivity"
-            android:label="Register"
+            android:label=""
             android:screenOrientation="portrait">
         </activity>
 

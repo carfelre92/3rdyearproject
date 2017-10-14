@@ -47,7 +47,7 @@ public class Settings extends Fragment implements View.OnClickListener {
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
-        dbRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://nutrition-app-b01d3.firebaseio.com/user").child(user.getUid());
+        //dbRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://nutrition-app-b01d3.firebaseio.com/user").child(user.getUid());
 
         return fragmentView;
     }

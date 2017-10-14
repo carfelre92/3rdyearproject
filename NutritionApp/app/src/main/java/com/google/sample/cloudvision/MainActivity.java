@@ -75,8 +75,11 @@ import android.view.MotionEvent;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -104,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
     public VerticalPager mVerticalPager;
 
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference dbRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +156,18 @@ public class MainActivity extends AppCompatActivity {
 
         mImageDetails =(TextView) findViewById(R.id.image_details);
         mMainImage = (ImageView) findViewById(R.id.main_image);
+
+        dbRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://nutrition-app-b01d3.firebaseio.com/user").child(firebaseAuth.getCurrentUser().getUid());
+        dbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
+                mImageDetails.setText("Hey " + userInformation.fName + ", you can press the button to take or upload a photo.");
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
     //new
     private void findViews() {
