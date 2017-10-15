@@ -13,4 +13,13 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="body_goal_array">
+        <item>Lose weight</item>
+        <item>Lose fat</item>
+        <item>Normal</item>
+        <item>Bulk up</item>
+        <item>Gain strength</item>
+    </string-array>
+
 </resources>

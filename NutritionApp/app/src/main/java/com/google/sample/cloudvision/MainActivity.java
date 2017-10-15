@@ -117,6 +117,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        System.out.println("Bananarama: " + this.getActionBar());
+        //this.getActionBar().setTitle("your title");
+
         //Initializing firebase auth object
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -157,17 +160,19 @@ public class MainActivity extends AppCompatActivity {
         mImageDetails =(TextView) findViewById(R.id.image_details);
         mMainImage = (ImageView) findViewById(R.id.main_image);
 
-        dbRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://nutrition-app-b01d3.firebaseio.com/user").child(firebaseAuth.getCurrentUser().getUid());
-        dbRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
-                mImageDetails.setText("Hey " + userInformation.fName + ", you can press the button to take or upload a photo.");
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+        if (firebaseAuth.getCurrentUser() != null) {
+            dbRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://nutrition-app-b01d3.firebaseio.com/user").child(firebaseAuth.getCurrentUser().getUid());
+            dbRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
+                    mImageDetails.setText("Hey " + userInformation.fName + ", you can press the button to take or upload a photo.");
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
     }
     //new
     private void findViews() {
