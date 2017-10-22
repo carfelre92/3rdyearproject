@@ -42,6 +42,8 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -187,6 +189,9 @@ public class MainActivity extends AppCompatActivity {
                         String[] split = n.split(" ");
                         mImageDetails.setText("Hey " + split[0] + ", you can press the button to take or upload a photo.");
                     }
+                    final Animation in = new AlphaAnimation(0.0f, 1.0f);
+                    in.setDuration(3000);
+                    mImageDetails.startAnimation(in);
 
                 }
                 @Override
