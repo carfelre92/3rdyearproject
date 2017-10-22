@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
@@ -56,6 +57,7 @@ public class Settings extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         if (view == logoutButton) {
             firebaseAuth.signOut();
+            LoginManager.getInstance().logOut();
             getActivity().finish();
             startActivity(new Intent(getActivity(), LoginActivity.class));
         }

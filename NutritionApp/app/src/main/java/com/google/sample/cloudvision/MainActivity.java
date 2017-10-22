@@ -49,6 +49,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.FacebookSdk;
+import com.facebook.Profile;
+import com.facebook.login.LoginManager;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpTransport;
@@ -117,17 +120,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        System.out.println("Bananarama: " + this.getActionBar());
-        //this.getActionBar().setTitle("your title");
-
         //Initializing firebase auth object
         firebaseAuth = FirebaseAuth.getInstance();
+
+        //FacebookSdk.sdkInitialize(getApplicationContext());
+
 
         if (firebaseAuth.getCurrentUser() == null) {
             //profile activity
             finish();
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         }
+
+        //if ()
 
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        toolbar.setTitle("Nutrition App");
@@ -166,7 +171,23 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
-                    mImageDetails.setText("Hey " + userInformation.fName + ", you can press the button to take or upload a photo.");
+                    Profile p = Profile.getCurrentProfile();
+                    UserInformation facebookUser = new UserInformation();
+                    if (p != null) {
+                        facebookUser.setfName(p.getFirstName());
+                        facebookUser.setlName(p.getLastName());
+                    }
+                    //if(!facebookUser.fName.equals("null")) {
+                    if(facebookUser.fName != null) {
+                        mImageDetails.setText("Hey " + facebookUser.fName + ", you can press the button to take or upload a photo.");
+                    } else if(userInformation != null) {
+                        mImageDetails.setText("Hey " + userInformation.fName + ", you can press the button to take or upload a photo.");
+                    } else {
+                        String n = firebaseAuth.getCurrentUser().getDisplayName();
+                        String[] split = n.split(" ");
+                        mImageDetails.setText("Hey " + split[0] + ", you can press the button to take or upload a photo.");
+                    }
+
                 }
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
@@ -471,6 +492,8 @@ public class MainActivity extends AppCompatActivity {
         filterWords.add("dish");
         filterWords.add("vegetable");
         filterWords.add("cuisine");
+        filterWords.add("baked goods");
+
 
         //Unwanted words that could be part of a desired result
         List<String> specificWords = new ArrayList<String>(); //Holds the specific words to filter out
@@ -479,6 +502,7 @@ public class MainActivity extends AppCompatActivity {
         specificWords.add("fruit"); //could be part of a desired result. For example: kiwifruit
         specificWords.add("yellow"); //could be part of a desired result. For example: Yellow capsicum
         specificWords.add("green"); //could be part of green apple
+        specificWords.add("bread"); //could be part of garlic bread
 
         //Used to hold if the picture is food or not
         Boolean isFood = false;
