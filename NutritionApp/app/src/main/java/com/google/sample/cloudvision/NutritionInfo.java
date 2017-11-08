@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.facebook.Profile;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,8 +20,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static java.lang.StrictMath.round;
 
@@ -28,6 +34,7 @@ public class NutritionInfo extends AppCompatActivity {
 
     private DatabaseReference dbRef;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private FirebaseAuth firebaseAuth;
 
     //Reccomended daily intake of certain nutrients
     //This info is based on the guide provided by the australia new zealand food standards code (FSC)
@@ -65,6 +72,9 @@ public class NutritionInfo extends AppCompatActivity {
     private TextView potassiumDI;
     private TextView carbohydratesDI;
     private TextView proteinDI;
+
+    //Contains result
+    private String message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +136,7 @@ public class NutritionInfo extends AppCompatActivity {
         proteinDI.setVisibility(View.GONE);
 
 
-        String message = getIntent().getStringExtra("bestRes");
+        message = getIntent().getStringExtra("bestRes");
         TextView infoTitle = (TextView) findViewById(R.id.infoTitle);
         infoTitle.setText("Nutrition facts about: " + message);
 
@@ -196,5 +206,50 @@ public class NutritionInfo extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+
+        //call save search
+        saveSearch();
+
     }
+
+    //save search
+    private void saveSearch(){
+        //get date/time
+        String time = new SimpleDateFormat("ddMMyy_HHmmss").format(new Date());
+
+        //get item searched
+        String foodSearched = message;
+
+        //Check if folder is already created, if not, create one with userID
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        String uID;
+        if(Profile.getCurrentProfile() != null) {
+            uID = Profile.getCurrentProfile().getId();
+        } else {
+            uID = user.getUid();
+        }
+        String path = "data/data/com.google.sample.cloudvision/" + uID;
+        File mydir = new File(path); //Creating an internal dir inside phone;
+        if (!mydir.exists())
+        {
+            mydir.mkdirs();
+        }
+
+        //Save new file with the name <food item>_<date and time>
+        FileOutputStream fos;
+        String filename = time + "_" + foodSearched;
+        String string = "empty";
+        try {
+            File file = new File(path,filename);
+            fos = new FileOutputStream(file);
+            fos.write(string.getBytes());
+            fos.close();
+            //Toast for confirmation when debugging
+            //Toast.makeText(getApplicationContext(), "File name with "+filename+" has been saved to path: " + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

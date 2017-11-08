@@ -206,7 +206,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             // Sign in success, update UI with the signed-in user's information
 
                         } else {
-                            Toast.makeText(LoginActivity.this, "Hello, "+firebaseAuth.getCurrentUser().getEmail().toString(), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(LoginActivity.this, "Hello, "+firebaseAuth.getCurrentUser().getEmail().toString(), Toast.LENGTH_SHORT).show();
                             finish();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             progressDialog.hide();

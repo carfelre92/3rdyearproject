@@ -17,6 +17,8 @@
 package com.google.sample.cloudvision;
 
 import android.Manifest;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -88,7 +90,10 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String CLOUD_VISION_API_KEY = "AIzaSyCI_h7DyA9fhinSFPcN5CCq-8L2tQ-4PSI";
+//  ************* Put new Cloud Vision API key here ************************************************
+    private static final String CLOUD_VISION_API_KEY = "";
+//  ************************************************************************************************
+
     public static final String FILE_NAME = "temp.jpg";
     private static final String ANDROID_CERT_HEADER = "X-Android-Cert";
     private static final String ANDROID_PACKAGE_HEADER = "X-Android-Package";
@@ -163,6 +168,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         findViews();
+
+        //Pulsing fab
+        ObjectAnimator scaleDown = ObjectAnimator.ofPropertyValuesHolder(fab,
+                PropertyValuesHolder.ofFloat("scaleX", 1.05f),
+                PropertyValuesHolder.ofFloat("scaleY", 1.05f));
+        scaleDown.setDuration(800);
+        scaleDown.setRepeatCount(ObjectAnimator.INFINITE);
+        scaleDown.setRepeatMode(ObjectAnimator.REVERSE);
+        scaleDown.start();
 
         mImageDetails =(TextView) findViewById(R.id.image_details);
         mMainImage = (ImageView) findViewById(R.id.main_image);

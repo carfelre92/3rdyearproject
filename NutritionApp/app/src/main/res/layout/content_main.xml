@@ -58,8 +58,8 @@
                 android:id="@+id/otherResultsTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginTop="24dp"
                 android:gravity="center"
                 android:text="Is this not the food you were looking for?"
                 android:visibility="invisible"/>
